@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """create a file states.py"""
 from api.v1.views import app_views, get, delete, post, put
-from flask import jsonify, request, abort
+from flask import jsonify, request
 from models import storage
 
 
