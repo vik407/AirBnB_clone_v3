@@ -15,7 +15,8 @@ dcon = {
     "users": "User"
 }
 
-@app_views.route('/status', strict_slaches=False)
+
+@app_views.route('/status', strict_slashes=False)
 def status():
     """Status"""
     return jsonify({"status": "OK"})
