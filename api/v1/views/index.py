@@ -16,7 +16,7 @@ dcon = {
 }
 
 
-@app_views.route('/status', strict_slashes=False)
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
     """Status"""
     return jsonify({"status": "OK"})
