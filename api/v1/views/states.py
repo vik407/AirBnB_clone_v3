@@ -1,36 +1,28 @@
 #!/usr/bin/python3
-"""create a file index.py"""
-from flask import Flask, jsonify
-from api.v1.views import app_views
+"""create a file states.py"""
+from api.v1.views import app_views, get, delete, post, put
+from flask import jsonify, request, abort
 from models import storage
 
 
-"""Create a global dict"""
-dcon = {
-    "amenities": "Amenity",
-    "cities": "City",
-    "places": "Place",
-    "reviews": "Review",
-    "states": "State",
-    "users": "User"
-}
-
-
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
-def status():
-    """Status"""
-    return jsonify({"status": "OK"})
-
-
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def obj_num():
-    """Endpoint that retrieves the number of each objects by type"""
-    objtype = {
-        "amenities": storage.count('Amenity'),
-        "cities": storage.count('City'),
-        "places": storage.count('Place'),
-        "reviews": storage.count('Review'),
-        "states": storage.count('State'),
-        "users": storage.count('User')
-    }
-    return jsonify(objtype), 200
+@app_views.route('/states', strict_slashes=False, methods=['GET', 'POST'])
+@app_views.route('/states/<state_id>',
+                 strict_slashes=False,
+                 methods=['GET', 'DELETE', 'PUT'])
+def states_crud(state_id=None):
+    '''Returns GET, DELETE, PUT, POST methods'''
+    data = {
+            'str': 'State',
+            '_id': state_id,
+            'p_id': None,
+            'check': ['name'],
+            'ignore': ['created_at', 'updated_at', 'id']
+            }
+    methods = {
+            'GET': get,
+            'DELETE': delete,
+            'POST': post,
+            'PUT': put
+            }
+    if request.method in methods:
+        return methods[request.method](data)
