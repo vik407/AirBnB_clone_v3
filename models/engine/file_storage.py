@@ -74,12 +74,10 @@ class FileStorage:
         cls: class name
         id: string of the object ID
         Returns the object name and its ID, or None if not found"""
-        cl = classes[cls]
-        if cl is None:
-            return None
-        for val in self.all(cl).values():
-            if val.id == id:
-                return val
+        if self.all(cls):
+            for val in self.all(cls).values():
+                if val.id == id:
+                    return val
         return None
 
     def count(self, cls=None):
