@@ -54,6 +54,8 @@ def post_place(c_id):
             abort(400, 'Not a JSON')
         if 'user_id' not in the_json:
             abort(400, 'Missing user_id')
+        if 'name' not in the_json:
+            abort(400, 'Missing name')
         user_id = request.get_json()["user_id"]
         the_user = storage.get(User, user_id)
         if the_user is None:
