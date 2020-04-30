@@ -61,8 +61,8 @@ def post_review(p_id):
         if 'text' not in the_json:
             abort(400, 'Missing text')
         new_review = Review(**request.get_json())
-        new_review.place_id = the_place
-        new_review.user_id = the_user
+        new_review.place_id = the_place.id
+        new_review.user_id = the_user.id
         storage.new(new_review)
         storage.save()
         return jsonify(new_review.to_dict()), 201
