@@ -15,7 +15,7 @@ from models.user import User
 @app_views.route('/places/<p_id>/reviews', strict_slashes=False,
                  methods=['GET'])
 def reviews(p_id):
-        "Get the reviews by place"
+        """Get the reviews by place"""
         the_review = storage.get(Place, p_id)
         if the_review is not None:
             return jsonify([a.to_dict() for a in the_review.reviews])

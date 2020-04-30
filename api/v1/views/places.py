@@ -15,7 +15,7 @@ from models.user import User
 @app_views.route('/cities/<c_id>/places', strict_slashes=False,
                  methods=['GET'])
 def places(c_id):
-        "Get the places by city"
+        """Get the places by city"""
         the_city = storage.get(City, c_id)
         if the_city is not None:
             return jsonify([a.to_dict() for a in the_city.places])
