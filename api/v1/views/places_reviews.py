@@ -12,7 +12,8 @@ from models.state import State
 from models.user import User
 
 
-@app_views.route('/places/<p_id>/reviews', strict_slashes=False, methods=['GET'])
+@app_views.route('/places/<p_id>/reviews', strict_slashes=False,
+                 methods=['GET'])
 def reviews(p_id):
         "Get the reviews by place"
         the_review = storage.get(Place, p_id)
