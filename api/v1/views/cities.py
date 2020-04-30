@@ -12,7 +12,7 @@ from models.city import City
                 strict_slashes=False)
 def cities(state_id):
     """get all the cities in a list"""
-    idstate = storage.get("State", state_id)
+    idstate = storage.get(State, state_id)
     if idstate is None:
         abort(404)
     list_city = []
@@ -24,7 +24,7 @@ def cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'],
                 strict_slashes=False)
 def cityid(city_id):
-    idcity = storage.get("City", city_id)
+    idcity = storage.get(City, city_id)
     if idcity is None:
         abort(404)
     return jsonify(idcity.to_dict())
