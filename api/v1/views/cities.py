@@ -16,7 +16,7 @@ def cities(state_id):
     if idstate is None:
         abort(404)
     list_city = []
-    for nameCity in state.cities:
+    for nameCity in idstate.cities:
         list_city.append(nameCity.to_dict())
     return jsonify(list_city)
 
@@ -37,7 +37,6 @@ def delete(city_id):
     idCity = storage.get(City, city_id)
     if idCity is not None:
         storage.delete(idCity)
-        storage.save()
         return jsonify({}), 200
     abort(404)
 
