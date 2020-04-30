@@ -13,7 +13,7 @@ def get_all_states():
                        storage.all(State).values()])
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False,
+@app_views.route('/states/<s_id>', strict_slashes=False,
                  methods=['GET'])
 def one_state(s_id):
         """Get state by id"""
@@ -23,7 +23,7 @@ def one_state(s_id):
         abort(404)
 
 
-@app_views.route('/states/<state_id>', strict_slashes=False,
+@app_views.route('/states/<s_id>', strict_slashes=False,
                  methods=['DELETE'])
 def del_state(s_id):
         """Delete state by id"""
@@ -49,7 +49,7 @@ def post_state():
         return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route("/states/<state_id>", strict_slashes=False, methods=['PUT'])
+@app_views.route("/states/<s_id>", strict_slashes=False, methods=['PUT'])
 def put_state_id(s_id):
         """Update existing state"""
         the_json = request.get_json()
