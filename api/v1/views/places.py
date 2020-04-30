@@ -2,7 +2,7 @@
 """Create a states.py"""
 
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, request
 from models import storage
 from models.place import Place
 from models.city import City
@@ -38,8 +38,9 @@ def delete(place_id):
     idplace = storage.get(Place, place_id)
     if idplace is None:
         abort(404)
-    idplace.delete()
-    return (jsonify({})), 200
+    storage.delete(idplace)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
@@ -72,14 +73,17 @@ def post(city_id):
                 strict_slashes=False)
 def put(place_id):
     """function or route that update an amenity"""
-    idplace = storage.get(Place, place_id)
-    if idplace is None:
-        abort(404)
-    if not request.get_json():
+    the_json = request.get_json()
+    if not the_json:
         abort(400, 'Not a JSON')
-    for name, value in request.get_json().items():
-        if name not in ['id', 'user_id','city_id', 'created_at',
-                        'updated_at']:
-            setattr(place, name, value)
-        idplace.save()
-        return jsonify(idplace.to_dict()), 200
+    idPlace = storage.get(Place, place_id)
+    if idPlace is not None:
+        for attr, value in request.get_json().items():
+            if (hasattr(idPlace, attr) and
+                    attr != 'id' and attr != 'created_at' and
+                    attr != 'updated_at' and attr != 'user_id' and
+                    attr != 'city_id'):
+                setattr(idPlace, attr, value)
+        storage.save()
+        return jsonify(idPlace.to_dict()), 200
+    abort(404)
